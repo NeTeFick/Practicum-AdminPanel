@@ -1,4 +1,4 @@
-const fetchGame = async url => {
+const fetchGame = async (url) => {
   try {
     const response = await fetch(url);
     return response.json();
@@ -20,21 +20,21 @@ const addData = async () => {
 const object = addData();
 const form = document.querySelector(".vote");
 
-form.addEventListener("submit", async event => {
+form.addEventListener("submit", async (event) => {
   event.preventDefault();
   const formData = new FormData(form);
   const obj = {
     id: (await object).id,
     gameplay: +formData.get("gameplay") ? +formData.get("gameplay") : 0,
     design: +formData.get("design") ? +formData.get("design") : 0,
-    idea: +formData.get("idea") ? +formData.get("idea") : 0
+    idea: +formData.get("idea") ? +formData.get("idea") : 0,
   };
   const response = await fetch("/vote", {
     method: "POST",
     headers: {
-      "Content-Type": "application/json"
+      "Content-Type": "application/json",
     },
-    body: JSON.stringify(obj)
+    body: JSON.stringify(obj),
   });
   const result = await response.json();
   document.querySelector("main").innerHTML = "";
@@ -43,7 +43,7 @@ form.addEventListener("submit", async event => {
   const h2 = document.createElement("h2");
   h2.textContent = "Рейтинг игр:";
   ul.append(h2);
-  result.forEach(element => {
+  result.forEach((element) => {
     const li = document.createElement("li");
     li.textContent = `${element.title}: ${element.rating}`;
     ul.append(li);
